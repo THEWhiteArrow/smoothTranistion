@@ -4,15 +4,12 @@
    "description": "",
    "main": "index.js",
    "scripts": {
-      "dev": "parcel index.js",
-      "build": "parcel build index.js",
       "test": "echo \"Error: no test specified\" && exit 1"
    },
    "author": "Damian",
    "license": "ISC",
    "dependencies": {
       "ejs": "^3.1.5",
-      "express": "^4.17.1",
-      "parcel-bundler": "^1.12.4"
+      "express": "^4.17.1"
    }
 }
