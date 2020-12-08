@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 
+
+const PORT = process.env.PORT || 3000;
 //##########################        MIDDLEWARE
 
 const app = express();
@@ -19,6 +21,6 @@ app.get('/about', (req, res) => {
 })
 
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
    console.log('APP IS LISTENING ON PORT 3000')
 });
