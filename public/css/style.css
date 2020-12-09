@@ -14,7 +14,7 @@ html {
 html{
    margin:0;
    padding:0;
-   height: 100vh;
+   min-height: 100%;
 }
 
 body{
@@ -84,7 +84,7 @@ ul.transition{
    display:flex;
    position: absolute;
    z-index:10;
-   height: 100vh;
+   height: 100%;
    width:100%;
    top:0;
    left:0;

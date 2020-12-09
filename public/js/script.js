@@ -99,12 +99,14 @@ barba.init({
       },
 
       async leave(data) {
+         const done = this.async();
          pageTransition();
 
          allowParallax = false;
-
          left.classList.remove('parallax');
          await delay(1300);
+
+         done();
       },
 
       enter(data) {
