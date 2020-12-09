@@ -3,16 +3,6 @@ let tlx, tly, tix, tiy;
 let allowParallax = true;
 let doParallax = true;
 
-
-const startParallax = () => {
-   window.addEventListener('resize', resizedWindow)
-   parallaxSetUp();
-   setTimeout(() => {
-      left.classList.add('parallax');
-      document.addEventListener('mousemove', handleMousemovement);
-   }, 1400)
-}
-
 const parallaxSetUp = () => {
    left = document.querySelector('.left');
    img = document.querySelector('img');
@@ -35,10 +25,10 @@ const handleMousemovement = (e) => {
 }
 
 const moveItems = e => {
-   tlx = -1 * (e.x - lx) / 120;
-   tly = -1 * (e.y - ly) / 120;
-   tix = 1 * (e.x - ix) / 350;
-   tiy = 1 * (e.y - iy) / 350;
+   tlx = -1 * (e.x - lx) / 160;
+   tly = -1 * (e.y - ly) / 160;
+   tix = 1 * (e.x - ix) / 410;
+   tiy = 1 * (e.y - iy) / 410;
    left.style.transform = `translate(${tlx}px,${tly}px)`;
    img.style.transform = `translate(${tix}px,${tiy}px)`;
 }
@@ -46,9 +36,18 @@ const moveItems = e => {
 const resizedWindow = () => {
    if (!isMobile()) {
       allowParallax = true;
+      parallaxSetUp();
+      setTimeout(() => {
+         document.addEventListener('mousemove', handleMousemovement);
+      }, 1400)
    } else {
       allowParallax = false;
+      document.removeEventListener('mousemove', handleMousemovement);
    }
+}
+
+const isMobile = () => {
+   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
 
@@ -56,30 +55,26 @@ const resizedWindow = () => {
 
 
 
-
-
-function delay(n) {
+const delay = (n) => {
    n = n || 2000;
    return new Promise(resolve => {
       setTimeout(resolve, n)
    })
 }
-function pageTransition() {
+const pageTransition = () => {
    const tl = gsap.timeline();
 
    tl.to('ul.transition li', { duration: .5, ease: 'sine', scaleY: 1, transformOrigin: 'bottom left', stagger: .2 })
    tl.to('ul.transition li', { duration: .4, ease: 'sine', scaleY: 0, transformOrigin: 'bottom left', stagger: .1, delay: .1 })
 }
-function contentAnimation() {
+const contentAnimation = () => {
    const tl = gsap.timeline();
 
    tl.from('.left', { duration: 1.5, translateY: 65, opacity: 0, delay: .2 })
-   tl.to('img', { duration: .8, ease: 'sine', clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)' }, "-=1")
+   tl.to('img', { duration: .8, ease: 'sine', clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)' }, "-=1.1")
 }
 
-function isMobile() {
-   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
+
 
 
 
@@ -92,25 +87,34 @@ function isMobile() {
 
 
 barba.init({
+   sync: true,
    transitions: [{
-      async once(data) {
-         startParallax();
-         await contentAnimation();
+      once(data) {
+         window.addEventListener('resize', resizedWindow)
+         resizedWindow();
+         setTimeout(() => {
+            left.classList.add('parallax');
+         }, 1400)
+         contentAnimation();
       },
 
       async leave(data) {
-         const done = this.async();
-         await pageTransition();
+         pageTransition();
+
+         allowParallax = false;
+
+         left.classList.remove('parallax');
          await delay(1300);
-         done();
       },
 
-      async enter(data) {
-         await contentAnimation();
+      enter(data) {
+         contentAnimation();
       },
 
       async after(data) {
          parallaxSetUp();
+         await delay(1400);
+         allowParallax = true;
          left.classList.add('parallax');
       }
 
