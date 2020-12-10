@@ -90,11 +90,11 @@ barba.init({
    sync: true,
    transitions: [{
       once(data) {
-         window.addEventListener('resize', resizedWindow)
+         window.addEventListener('resize', resizedWindow);
          resizedWindow();
          setTimeout(() => {
             left.classList.add('parallax');
-         }, 1400)
+         }, 1400);
          contentAnimation();
       },
 
@@ -106,7 +106,7 @@ barba.init({
          left.classList.remove('parallax');
          await delay(1300);
 
-         done();
+         await done();
       },
 
       enter(data) {
