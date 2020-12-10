@@ -19,16 +19,16 @@ const handleMousemovement = (e) => {
       setTimeout(() => {
          doParallax = true;
          console.log(e)
-      }, 50);
+      }, 15);
       moveItems(e);
    }
 }
 
 const moveItems = e => {
-   tlx = -1 * (e.x - lx) / 160;
-   tly = -1 * (e.y - ly) / 160;
-   tix = 1 * (e.x - ix) / 410;
-   tiy = 1 * (e.y - iy) / 410;
+   tlx = -1 * (e.x - lx) / 320;
+   tly = -1 * (e.y - ly) / 320;
+   tix = 1 * (e.x - ix) / 710;
+   tiy = 1 * (e.y - iy) / 710;
    left.style.transform = `translate(${tlx}px,${tly}px)`;
    img.style.transform = `translate(${tix}px,${tiy}px)`;
 }
@@ -38,6 +38,7 @@ const resizedWindow = () => {
       allowParallax = true;
       parallaxSetUp();
       setTimeout(() => {
+         left.classList.add('parallax');
          document.addEventListener('mousemove', handleMousemovement);
       }, 1400)
    } else {
@@ -89,13 +90,10 @@ const contentAnimation = () => {
 barba.init({
    sync: true,
    transitions: [{
-      once(data) {
+      async once(data) {
+         contentAnimation();
          window.addEventListener('resize', resizedWindow);
          resizedWindow();
-         setTimeout(() => {
-            left.classList.add('parallax');
-         }, 1400);
-         contentAnimation();
       },
 
       async leave(data) {
@@ -103,10 +101,9 @@ barba.init({
          pageTransition();
 
          allowParallax = false;
-         left.classList.remove('parallax');
          await delay(1300);
 
-         await done();
+         done();
       },
 
       enter(data) {
@@ -114,10 +111,9 @@ barba.init({
       },
 
       async after(data) {
-         parallaxSetUp();
          await delay(1400);
+         parallaxSetUp();
          allowParallax = true;
-         left.classList.add('parallax');
       }
 
 

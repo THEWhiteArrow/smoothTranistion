@@ -59,18 +59,17 @@ h1{
 
 .cta{
    display: block;
-   padding:1em 1em 2em 1em;
+   padding:1em 0em 2em 0em;
    font-size:1.4em;
    color:white;
 }
+
 .parallax{
-   transition: transform .25s linear;
+   transition: transform .2s linear;
+   -webkit-font-smoothing: subpixel-antialiased ;
+   transform: translateZ(0) scale(1.0, 1.0) ;
 }
 
-.left{
-   
-   padding-left: 1em;
-}
 
 img{
    width:100%;
@@ -126,6 +125,7 @@ ul.transition li{
       position: absolute;
       z-index: 21 !important;
       width:100%;
+      padding-right:1em;
       animation-fill-mode: initial;
    }
 
